@@ -7,18 +7,25 @@ var board = {
 function startGame() {
   var childElements = document.getElementsByClassName('board')[0].children;
   //console.log (childElements);
-  for (var i = 0 ; i < childElements.length; i++) {
+  for (var i = 0; i < childElements.length; i++) {
     addListeners(childElements.item(i));
     addCellToBoard(childElements.item(i));
   }
-  for(var i=0 ; i < board.cells.length; i++) {
-    countSurroundingMines(board.cells[i]);
+  for (var i = 0; i < board.cells.length; i++) {
+    board.cells[i].surroundingMines = countSurroundingMines(board.cells[i]);
   }
 }
 
 function countSurroundingMines(element) {
-  var result = getSurroundingCells(element.row, element.col);
-  board.cells.element.surroundingMines = result;
+  var surroundingCells = getSurroundingCells(element.row, element.col);
+  var mines = 0;
+  for (var i = 0; i < surroundingCells.length; i++) {
+    //console.log (surroundingCells[i])
+    if (surroundingCells[i].isMine === true) {
+      mines++;
+    }
+  }
+  return mines;
 }
 
 function addListeners(element) {
@@ -29,6 +36,7 @@ function addListeners(element) {
 
 function showCell(evt) {
   evt.target.classList.remove('hidden');
+  showSurrounding(evt.target)
 }
 
 function markCell(evt) {
@@ -37,23 +45,23 @@ function markCell(evt) {
 }
 
 function getRow(element) {
-    for (var i=0; i < element.classList.length; i++) {
-      var boxes= element.classList[i];
+    for (var i =0; i < element.classList.length; i++) {
+    var boxes = element.classList[i];
       if (boxes.indexOf("row") > -1) {
-        var number = boxes.split("-");
+       var number = boxes.split("-");
         //console.log (number[1]);
-        return parseInt(number[1]);
+       return parseInt(number[1]);
     }
   }
 }
 
 function getCol(element) {
     for (var i=0; i < element.classList.length; i++) {
-      var boxes= element.classList[i];
+    var boxes= element.classList[i];
       if (boxes.indexOf("col") > -1) {
-        var number = boxes.split("-");
+       var number = boxes.split("-");
         //console.log (number[1]);
-        return parseInt(number[1]);
+       return parseInt(number[1]);
     }
   }
 }
