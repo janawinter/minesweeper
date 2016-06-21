@@ -5,6 +5,7 @@ function startGame() {
   //console.log (childElements);
   for (var i = 0 ; i < childElements.length; i++) {
     addListeners(childElements.item(i));
+    addCellToBoard(childElements.item(i));
   }
 }
 
@@ -28,15 +29,30 @@ var board = {
 }
 
 function getRow(element) {
-  var childElements = document.getElementsByClassName('hidden');
-  for (var i = 0 ; i < childElements.length; i++) {
-    for (var j=0; j < childElements[i].classList.length; j++) {
-      var boxes= childElements[i].classList[j];
+    for (var i=0; i < element.classList.length; i++) {
+      var boxes= element.classList[i];
       if (boxes.indexOf("row") > -1) {
         var number = boxes.split("-");
         //console.log (number[1]);
         return number[1];
-      }
     }
   }
+}
+function getCol(element) {
+    for (var i=0; i < element.classList.length; i++) {
+      var boxes= element.classList[i];
+      if (boxes.indexOf("col") > -1) {
+        var number = boxes.split("-");
+        //console.log (number[1]);
+        return number[1];
+    }
+  }
+}
+function addCellToBoard(element) {
+ var newCell = {
+    row: getRow(element),
+    col: getCol(element),
+    isMine:element.classList.contains("mine")
+ }
+board.cells.push(newCell)
 }
