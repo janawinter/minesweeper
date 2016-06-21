@@ -42,6 +42,8 @@ function showCell(evt) {
 function markCell(evt) {
   evt.preventDefault();
   evt.target.classList.toggle('marked');
+  evt.target.classList.toggle('hidden');
+  switchClick (evt.target).isMarked =true
 }
 
 function getRow(element) {
@@ -74,4 +76,13 @@ function addCellToBoard(element) {
   }
   board.cells.push(newCell)
 }
-
+function switchClick (element) {
+var block
+  for (var i = 0; i< board.cells.length; i++) {
+      if (board.cells[i].row === getRow(element)
+      && board.cells[i].col === getCol(element)){
+     block = board.cells[i]
+    }
+  }
+  return block
+}
