@@ -43,8 +43,12 @@ function markCell(evt) {
   evt.preventDefault();
   evt.target.classList.toggle('marked');
   evt.target.classList.toggle('hidden');
-  switchClick (evt.target).isMarked =true
+// 2.When you've found the right object, set a property called isMarked on it to true.
+  cell=switchClick(evt.target)
 }
+
+//add a function call to checkForWin.
+checkForWin()
 
 function getRow(element) {
     for (var i =0; i < element.classList.length; i++) {
@@ -76,13 +80,37 @@ function addCellToBoard(element) {
   }
   board.cells.push(newCell)
 }
+//1.checks each cell in the global object for the right row and column.
 function switchClick (element) {
-var block
-  for (var i = 0; i< board.cells.length; i++) {
+  for (var i = 0; i < board.cells.length; i++) {
       if (board.cells[i].row === getRow(element)
       && board.cells[i].col === getCol(element)){
-     block = board.cells[i]
+
+ board.cells[i].isMarked=true
+console.log (board.cells[i])
     }
   }
-  return block
+}
+//define a checkForWin function. It should loop through all of board.cells.
+function checkForWin () {
+
+
+  var checkIt= board.cells;
+  for (var i = 0; i < board.cells.length; i++){
+ if (board.cells[i] ===isMine(element)
+  && board.cells[i] ===isMarked(element)) {
+  checkIt=board.cells[i]
+ }
+ else
+ return checkIt
+
+/*For each cell, check to see if both .isMine and .isMarked are true.
+If any mine still exists that isn't marked,
+the player hasn't won yet and you can return out of the function.
+If every mine is marked, find a way to check all the elements in the DOM
+ to be sure that there are no elements with class 'hidden' still set.
+ If both these criteria pass, the player has won!
+ Find a way to tell them: an alert is probably the simplest.
+*/
+}
 }
