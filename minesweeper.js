@@ -36,9 +36,26 @@ function addListeners(element) {
 //define click function
 function showCell(evt) {
   evt.target.classList.remove('hidden');
-  showSurrounding(evt.target)
+if (evt.target.classList.contains('mine')) {
+showAllMines();
+}
+showSurrounding(evt.target)
   //add a function call to checkForWin.
 checkForWin();
+
+}
+//create showAllMines function
+function showAllMines () {
+//search the child elements
+var childElements = document.getElementsByClassName('board')[0].children;
+//loop through childelements
+for(var i = 0; i < childElements.length; i++) {
+  //check if contains mine
+if (childElements[i].classList.contains('mine')) {
+  //if contains mine - remove hidden class
+ childElements[i].classList.remove('hidden')
+    }
+  }
 }
 //create right click function
 function markCell(evt) {
@@ -53,7 +70,6 @@ function markCell(evt) {
   //add a function call to checkForWin.
 checkForWin();
 }
-
 
 function getRow(element) {
    for (var i =0; i < element.classList.length; i++) {
@@ -101,28 +117,28 @@ function setMarked (element) {
 
 //define a checkForWin function. It should loop through all of board.cells.
 function checkForWin() {
+  //to make alert only who once:
   var won = false;
+  //search the board for child element with a class of hidden
   var childElements = document.getElementsByClassName('board')[0].children;
+  //loop through the elements
   for (var j = 0; j < childElements.length; j++) {
+    // if contains hidden-return
     if (childElements.item(j).classList.contains("hidden")) {
       return;
     }
   }
+  //loop through the cell objects
   for (var i = 0; i < board.cells.length; i++) {
-    if (board.cells[i].isMine && board.cells[i].isMarked) {
+    //if isMine and isMarked true
+    if (board.cells[i].isMine === true && board.cells[i].isMarked === true) {
+      //set won to be true
       won = true;
     }
   }
+  //if won = true
   if (won === true) {
+    //alert winner
     alert("You're a winner!");
   }
 }
-
-/*For each cell, check to see if both .isMine and .isMarked are true.
-If any mine still exists that isn't marked,
-the player hasn't won yet and you can return out of the function.
-If every mine is marked, find a way to check all the elements in the DOM
- to be sure that there are no elements with class 'hidden' still set.
- If both these criteria pass, the player has won!
- Find a way to tell them: an alert is probably the simplest.
-*/
