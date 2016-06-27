@@ -5,6 +5,7 @@ var board = {
 }
 
 function startGame() {
+  console.log (board);
   var childElements = document.getElementsByClassName('board')[0].children;
 //console.log (childElements);
   for (var i = 0; i < childElements.length; i++) {
@@ -36,12 +37,17 @@ function addListeners(element) {
 //define click function
 function showCell(evt) {
   evt.target.classList.remove('hidden');
-if (evt.target.classList.contains('mine')) {
-showAllMines();
+  if (evt.target.classList.contains('mine')) {
+showAllMines()
+alert('You lose! try again!')
+
+  resetGame()
 }
-showSurrounding(evt.target)
+  else {
+  showSurrounding(evt.target)
+  }
   //add a function call to checkForWin.
-checkForWin();
+  checkForWin();
 
 }
 //create showAllMines function
@@ -54,9 +60,22 @@ for(var i = 0; i < childElements.length; i++) {
 if (childElements[i].classList.contains('mine')) {
   //if contains mine - remove hidden class
  childElements[i].classList.remove('hidden')
-    }
   }
+ }
 }
+
+function resetGame () {
+ var childElements = document.getElementsByClassName('board')[0].children;
+ for (var i = 0; i < childElements.length; i++){
+ childElements[i].innerHTML = '';
+ childElements[i].classList.add('hidden')
+  //if contains mine - remove hidden class
+}
+board.cells=[]
+  startGame ()
+}
+
+//
 //create right click function
 function markCell(evt) {
 //prevents context menu
@@ -142,3 +161,6 @@ function checkForWin() {
     alert("You're a winner!");
   }
 }
+
+//After a win or loss, give players a chance to try again by resetting the board to its default state.
+//You'll need to put classes back the way they were at the start, and re-initialise the global board object.
