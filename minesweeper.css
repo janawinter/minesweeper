@@ -5,11 +5,11 @@ html, body {
 
 
 body {
-  padding-top: 100px;
+  padding-top:20px;
   padding-right: 300px;
   padding-left: 300px;
   background-color: #ffb3ec;
-  display: flex;
+  display:flex;
   align-items: center;
   justify-content: center;
 }
